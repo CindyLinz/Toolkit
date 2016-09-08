@@ -17,3 +17,13 @@
       - avoid grep same files by inode number
 
       - grep only git tracked files if it's in a git repo.
+
+  + brightness.c
+
+    ```shell
+    brightness up
+    brightness down
+    brightness [brightness number]
+    ```
+
+    A binary program for setuid.
