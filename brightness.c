@@ -45,16 +45,24 @@ int main(int argc, char * argv[]){
     int curr = in("/sys/class/backlight/intel_backlight/brightness");
 
     if( argc >= 2 && strcmp(argv[1], "up")==0 ){
-        if( curr + 1 <= max ){
-            ++curr;
-            out("/sys/class/backlight/intel_backlight/brightness", curr);
-        }
+        int delta = 1;
+        if( argc >= 3 )
+            delta = atoi(argv[2]);
+        if( curr + delta <= max )
+            curr += delta;
+        else
+            curr = max;
+        out("/sys/class/backlight/intel_backlight/brightness", curr);
     }
     else if( argc >= 2 && strcmp(argv[1], "down")==0 ){
-        if( curr - 1 >= 0 ){
-            --curr;
-            out("/sys/class/backlight/intel_backlight/brightness", curr);
-        }
+        int delta = 1;
+        if( argc >= 3 )
+            delta = atoi(argv[2]);
+        if( curr - delta >= 0 )
+            curr -= delta;
+        else
+            curr = 0;
+        out("/sys/class/backlight/intel_backlight/brightness", curr);
     }
     else if( argc >= 2 && all_digits(argv[1]) ){
         int req = atoi(argv[1]);
