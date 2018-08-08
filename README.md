@@ -27,3 +27,11 @@
     ```
 
     A binary program for setuid.
+
+  + run\_after.pl
+
+    ```shell
+    run_after.pl pid cmds...
+    ```
+
+      - run shell cmds after process pid endded.
