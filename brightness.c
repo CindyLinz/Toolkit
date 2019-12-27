@@ -71,6 +71,6 @@ int main(int argc, char * argv[]){
             out("/sys/class/backlight/intel_backlight/brightness", curr);
         }
     }
-    printf("brightness = %d/%d\n", curr, max);
+    printf("brightness = %d/%d\n", in("/sys/class/backlight/intel_backlight/brightness"), max);
     return 0;
 }
