@@ -43,33 +43,37 @@ static inline void out(const char * path, int data){
 int main(int argc, char * argv[]){
     int max = in("/sys/class/backlight/intel_backlight/max_brightness");
     int curr = in("/sys/class/backlight/intel_backlight/brightness");
+    int next = curr;
 
     if( argc >= 2 && strcmp(argv[1], "up")==0 ){
         int delta = 1;
         if( argc >= 3 )
             delta = atoi(argv[2]);
         if( curr + delta <= max )
-            curr += delta;
+            next = curr + delta;
         else
-            curr = max;
-        out("/sys/class/backlight/intel_backlight/brightness", curr);
+            next = max;
     }
     else if( argc >= 2 && strcmp(argv[1], "down")==0 ){
         int delta = 1;
         if( argc >= 3 )
             delta = atoi(argv[2]);
         if( curr - delta >= 0 )
-            curr -= delta;
+            next = curr - delta;
         else
-            curr = 0;
-        out("/sys/class/backlight/intel_backlight/brightness", curr);
+            next = 0;
     }
     else if( argc >= 2 && all_digits(argv[1]) ){
         int req = atoi(argv[1]);
-        if( req <= max ){
-            curr = req;
-            out("/sys/class/backlight/intel_backlight/brightness", curr);
-        }
+        if( req <= max )
+            next = req;
+    }
+    while( next!=curr ){
+        if( curr < next )
+            ++curr;
+        else
+            --curr;
+        out("/sys/class/backlight/intel_backlight/brightness", curr);
     }
     printf("brightness = %d/%d\n", in("/sys/class/backlight/intel_backlight/brightness"), max);
     return 0;
