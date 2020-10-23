@@ -69,11 +69,13 @@ int main(int argc, char * argv[]){
             next = req;
     }
     while( next!=curr ){
+        curr += (next - curr)/500;
         if( curr < next )
             ++curr;
         else
             --curr;
         out("/sys/class/backlight/intel_backlight/brightness", curr);
+        printf("brightness = %d/%d\r", curr, max);
     }
     printf("brightness = %d/%d\n", in("/sys/class/backlight/intel_backlight/brightness"), max);
     return 0;
