@@ -16,13 +16,13 @@ if( $status{Speaker}{volume} && !$status{Headphone}{volume} ) {
 
 for( $ARGV[0] ){
     if( /toggle/ ) {
-        if( $status{Master}{power} eq 'on' ) {
-            system('amixer set Master off');
-        }
-        else {
-            system('amixer set Master on');
-            system("amixer set $active on");
-        }
+        #if( $status{Master}{power} eq 'on' ) {
+            system('amixer set Master off 0%');
+        #}
+        #else {
+            #system('amixer set Master on');
+            #system("amixer set $active on");
+        #}
     }
     if( /up/ ) {
         system('amixer set Master on 5%+');
